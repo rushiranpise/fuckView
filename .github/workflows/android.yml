@@ -1,0 +1,35 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Build with Gradle
+      run: ./gradlew build
+    - name: Build debug APK
+      run: ./gradlew assembleDebug --stacktrace
+      # 利用upload-artifact实现build结果的保存（可以在Actions的控制台下载压缩文件）
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+          # 设置压缩文件的名称，在控制台会得到WhuHelper-debug.zip文件的下载链接
+          # 下载后解压缩，里面直接可以看到app-debug.apk，没有其他东西
+          name: fuckView-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
+    
