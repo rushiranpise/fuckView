@@ -47,7 +47,7 @@
             android:layout_alignParentRight="true"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:visibility="gone"
-            android:text="查看详情" />
+            android:text="Fuck it!" />
 
         <TextView
             android:id="@+id/dump_info"
